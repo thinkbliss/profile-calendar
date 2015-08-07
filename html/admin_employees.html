@@ -1,0 +1,112 @@
+
+<div id='adminnav'>
+<ul>
+<li><a href="/welldays/admin/employees">Employees</a></li>
+<li><a href="/welldays/admin/events">Events</a></li>
+<li><a href="/welldays/admin/organization">Organization</a></li>
+<li><a href="/welldays/admin/testimonials">Testimonials</a></li>
+</ul>
+</div>
+
+<script>
+
+function getUser(id) {
+	console.log("getUser"+id);
+	$.getJSON( "/welldays/user/get/"+id, function( data ) {
+
+	var response=data.response;
+	console.log(response.user_email);
+	$('input[name=user_email]').val(response.user_email);
+	$('input[name=supervisor]').val(response.supervisor);
+	var daysoptions="";
+	for (var i=0;i<=100;i++) {
+		var selectedstr="";
+		if (response.days_available==i) {
+			selectedstr=" selected";
+		}
+		daysoptions+="<option value = '"+i+"'"+selectedstr+">"+i+"</option>"
+	}
+	$('select[name=days_available]').html(daysoptions);
+	if (response.ADMIN==1) {
+		$('input[name=ADMIN]').prop('checked', "checked");
+	}
+	window.updateUrlStr="/welldays/user/update/"+id;
+	
+});
+
+}
+$.getJSON( "/welldays/users/", function( data ) {
+	console.log("data.response"+data.response);
+	
+	var daysoptions="";
+	for (var i=0;i<data.response.users.length;i++) {
+		var selectedstr="";
+		if (data.response.users[i].display_name && data.response.users[i].display_name!="undefined") {
+			displayname=data.response.users[i].display_name;
+		} else {
+			displayname=data.response.users[i].user_email;
+		}
+		daysoptions+="<option value = '"+data.response.users[i].id+"'>"+displayname+"</option>"
+	}
+	$('select[name=users]').html(daysoptions);
+	getUser(1);
+
+
+});
+
+
+
+</script>
+
+
+
+<div class="adminTitle">PLEASE CHOOSE AN EMPLOYEE</div>
+<div class="adminContainer">
+<form>
+	<select name="users" onchange="getUser(this.value)"></select>
+</form>
+</div>
+<div class="adminDetails">
+
+<div class="adminTitle">EDIT EMPLOYEE DETAILS</div>
+<div class="adminContainer">
+<form id="searchForm">
+  EMAIL: <input type="text" name="user_email"><br/>
+  SUPERVISOR:<input type="text" name="supervisor" ><br/>
+  DAYS AVAILABLE: <select name="days_available"><br/>
+	</select><br/>
+	USER IS ADMIN: <input type="checkbox" name="ADMIN" value="1"><br/>
+  <input type="submit" value="Do It">
+  </form>
+</div>
+<br/>
+<div class="result"></div>
+</div>
+<script>
+
+$( "#searchForm" ).submit(function( event ) {
+	$( ".result" ).empty();
+ 	console.log("submit searchform");
+  // Stop form from submitting normally
+  event.preventDefault();
+
+var $form = $( this ),
+    user_email = $form.find( "input[name='user_email']" ).val(),
+    supervisor = $form.find( "input[name='supervisor']" ).val(),
+    ADMIN = $('input[name="ADMIN"]:checked').val() ? $('input[name="ADMIN"]:checked').val() : 0,
+    days_available=$form.find( "select[name='days_available']").val(),
+    url = window.updateUrlStr;
+    // Send the data using post
+    console.log("ADMIN"+ADMIN);
+  var posting = $.post( url, { user_email: user_email,supervisor: supervisor,days_available:days_available ,ADMIN:ADMIN} );
+ 
+  // Put the results in a div
+  posting.done(function( data ) {
+    //var content = $( data ).find( "#content" );
+    var response = jQuery.parseJSON(data).response;
+    $( ".result" ).empty().append( response.status );
+    //alert("done!");
+  });
+
+  });
+</script>

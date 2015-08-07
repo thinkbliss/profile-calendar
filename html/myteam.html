@@ -1,0 +1,64 @@
+
+MYTEAM<div class="myinfo">
+
+
+<br/><br/>YOUR REQUESTS</p><br/>
+
+
+<div class="myteam"></div>
+<div id="pagination_pending"></div>
+
+<script>
+function cap(para1, para2){
+    alert('here'+para1+" "+para2);
+}
+
+
+
+function getPendingEvents(pagenum) {
+  console.log ("getPendingEvents"+pagenum);
+      $(".pending").html('');
+      $("#pagination_pending").html('');
+
+      $.getJSON( "/welldays/myrequests/get?page="+pagenum, function( data ) {
+        var pagecount=Math.ceil(data.count/5);
+        var html = "<ul>";
+        for(i = 0; i < data.response.length; i++) {
+            //check if pending or approved (do i need to add rejected?)
+            if (data.response[i].status=="pending") {
+            		            html += "<li>" + data.response[i].id+" "+data.response[i].day_date +" "+data.response[i].user_email +" "+data.response[i].day_title +" "+data.response[i].days_available  +" <b>"+data.response[i].status + "</b> <a href='/welldays/mydays/approve/"+data.response[i].id+"'>approve</a>  <a href='/welldays/mydays/reject/"+data.response[i].id+"'>reject</a>"+"</li>";
+
+            } else if (data.response[i].status=="rejected"){
+                            html += "<li>" + data.response[i].id+" "+data.response[i].day_date +" "+data.response[i].user_email +" "+data.response[i].day_title +" "+data.response[i].days_available  +" <b>"+data.response[i].status + "</b> <a href='/welldays/mydays/approve/"+data.response[i].id+"'>approve</a>"+"</li>";
+
+            } else {
+            		            html += "<li>" + data.response[i].id+" "+data.response[i].day_date +" "+data.response[i].user_email +" "+data.response[i].day_title +" "+data.response[i].days_available  +" <b>"+data.response[i].status + "</b> <a href='/welldays/mydays/reject/"+data.response[i].id+"'>reject</a>"+"</li>";
+
+            }
+
+        }
+        html += "</ul>";
+
+        $(".myteam").append(html);
+
+         var paginationhtml="";
+          for (var i=1; i<=pagecount; i++) { 
+              paginationhtml+= "<a href='#' rel='like"+i+"' data-para1='"+(i-1)+"'  >"+i+"</a> "; 
+          };
+
+          $("#pagination_pending").append(paginationhtml);
+
+          $("#pagination_pending a[rel^='like']").click(function(){
+             var para1 = this.dataset['para1'];
+             getPendingEvents(para1);
+          });
+
+
+
+      });
+}
+
+
+getPendingEvents(0);
+</script>
+

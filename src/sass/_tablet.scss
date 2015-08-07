@@ -1,0 +1,177 @@
+/* ----------- iPad mini ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+    //home
+    .jcarousel li .sectionContent { width: 768px !important; }
+
+    // calendar
+    .calendarHero { width: 90% !important; }
+
+    // charities
+    .charitiesContent .charityRow .calloutBox.leftCalloutBox { padding: 40px 40px 70px 40px; }
+    .charitiesContent .charityRow .calloutBox.rightCalloutBox { padding: 40px 40px 70px 40px; }
+    .charitiesContent .charityRow#charItem-1 { background-position: -150px center !important; }
+    .charitiesContent .charityRow .calloutBox h3 { font-size: 2.5rem; }
+    .charitiesContent .charityRow .calloutBox p { font-size: 1rem; }
+
+    .columns.six.previousEvent, .columns.six.nextEvent { width: 50%; margin-left: 0 !important; }
+    .columns.six.previousEvent {  }
+
+    // may days
+    .myDaysContent .row { padding-left: 0 !important; }
+    .myDaysList .rightContent { width: 100% !important; max-width: inherit; padding-bottom: 30px; }
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+    // home
+    .sectionContainer .sectionContent { max-width: 650px; }
+    .jcarousel li .sectionContent { width: 768px !important; }
+
+    // calenedar
+    .monthNav .custom-prev { left: 10px !important; }
+    .monthNav .custom-next { right: 540px !important; }
+    .calendarHero { padding-top: 40px; }
+
+    // may days
+    .myDaysContent .row { padding-left: 40px; }
+    .myDaysList .centerContent { width: initial; }
+    .pendingStatus { margin-top: -30px !important; }
+    .myDaysRequirement p { padding: 20px 250px 20px 230px; }
+    .faqContent .accordion li p { width: 600px; }
+}
+
+
+/* Generic Landscape */
+@media only screen and (max-width: 1024px) {
+    .myDaysList .rightContent { width: 100% !important; max-width: inherit; padding-bottom: 30px; }
+
+}
+
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+    .jcarousel li .sectionContent { width: 768px !important; }
+}
+
+/* ----------- iPad 1 and 2 ----------- */
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+}
+
+/* ----------- iPad 3 and 4 ----------- */
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+}
+
+/* ----------- Galaxy Tab 10.1 ----------- */
+
+/* Portrait and Landscape */
+@media 
+  (min-device-width: 800px) 
+  and (max-device-width: 1280px) {
+
+}
+
+/* Portrait */
+@media 
+  (max-device-width: 800px) 
+  and (orientation: portrait) { 
+
+}
+
+/* Landscape */
+@media 
+  (max-device-width: 1280px) 
+  and (orientation: landscape) { 
+
+}
+
+/* ----------- Asus Nexus 7 ----------- */
+
+/* Portrait and Landscape */
+@media screen 
+  and (device-width: 601px) 
+  and (device-height: 906px) 
+  and (-webkit-min-device-pixel-ratio: 1.331) 
+  and (-webkit-max-device-pixel-ratio: 1.332) {
+
+}
+
+/* Portrait */
+@media screen 
+  and (device-width: 601px) 
+  and (device-height: 906px) 
+  and (-webkit-min-device-pixel-ratio: 1.331) 
+  and (-webkit-max-device-pixel-ratio: 1.332) 
+  and (orientation: portrait) {
+
+}
+
+/* Landscape */
+@media screen 
+  and (device-width: 601px) 
+  and (device-height: 906px) 
+  and (-webkit-min-device-pixel-ratio: 1.331) 
+  and (-webkit-max-device-pixel-ratio: 1.332) 
+  and (orientation: landscape) {
+
+}

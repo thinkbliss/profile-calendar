@@ -1,0 +1,307 @@
+<div id="main">
+  test
+</div>
+<div class="result">
+
+</div>
+
+<div id='adminnav'>
+<ul>
+<li>Employees</li>
+<li>Events</li>
+<li>Organization</li>
+</ul>
+</div>
+<br/><br/>ADD a charity: (must be admin)<br/>
+<form action="/welldays/charity/add" id="addcharity">
+  <input type="text" name="description" placeholder="blah...">
+  <input type="text" name="name" placeholder="blah...">
+  <input type="text" name="contact"/>
+  <input type="text" name="url"/>
+  <input type="submit" value="Do It">
+</form>
+<!-- the result of the search will be rendered inside this div -->
+<div id="result"></div>
+ 
+<script>
+// Attach a submit handler to the form
+$( "#addcharity" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    desc = $form.find( "input[name='description']" ).val(),
+    name = $form.find( "input[name='name']" ).val(),
+    contact = $form.find( "input[name='contact']" ).val(),
+    myurl = $form.find( "input[name='url']" ).val(),
+    url = $form.attr( "action" );
+ 
+  // Send the data using post
+  var posting = $.post( url, { description: desc,name: name,contact:contact,url:myurl } );
+ 
+  // Put the results in a div
+  posting.done(function( data ) {
+    //var content = $( data ).find( "#content" );
+    $( "#result" ).empty().append( data );
+  });
+});
+</script>
+
+
+
+
+<br/><br/>ADD a charity day TO CHARITY 1:<br/>
+<form action="/welldays/charitydays/add/1" id="searchForm">
+  <input type="text" name="description" placeholder="blah...">
+  <input type="text" name="title" placeholder="blah...">
+  <input type="text" class="some_class" name="datetime" id="some_class_1"/>
+  <input type="text" class="some_class" name="datetimeend" id="some_class_1"/>
+  <input type="text" class="some_class" name="submissionstart" id="some_class_1"/>
+  <input type="text" class="some_class" name="submissionend" id="some_class_1"/>
+  <input type="submit" value="Do It">
+</form>
+<!-- the result of the search will be rendered inside this div -->
+<div id="result"></div>
+ 
+<script>
+// Attach a submit handler to the form
+$( "#searchForm" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    desc = $form.find( "input[name='description']" ).val(),
+    title = $form.find( "input[name='title']" ).val(),
+    datetime = $form.find( "input[name='datetime']" ).val(),
+    datetimeend = $form.find( "input[name='datetimeend']" ).val(),
+    submissionstart = $form.find( "input[name='submissionstart']" ).val()
+    submissionend = $form.find( "input[name='submissionend']" ).val()
+    url = $form.attr( "action" );
+ 
+  // Send the data using post
+  var posting = $.post( url, { description: desc,title: title,datetime:datetime ,datetimeend:datetimeend,submissionstart:submissionstart,submissionend:submissionend} );
+ 
+  // Put the results in a div
+  posting.done(function( data ) {
+    //var content = $( data ).find( "#content" );
+    $( "#result" ).empty().append( data );
+  });
+});
+</script>
+
+
+
+	
+
+
+	<script>/*
+window.onerror = function(errorMsg) {
+	$('#console').html($('#console').html()+'<br>'+errorMsg)
+}*/
+$('#datetimepicker').datetimepicker({
+dayOfWeekStart : 1,
+lang:'en',
+disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
+startDate:	'1986/01/05'
+});
+$('#datetimepicker').datetimepicker({value:'2015/04/15 05:03',step:10});
+
+$('.some_class').datetimepicker();
+
+$('#default_datetimepicker').datetimepicker({
+	formatTime:'H:i',
+	formatDate:'d.m.Y',
+	defaultDate:'8.12.1986', // it's my birthday
+	defaultTime:'10:00',
+	timepickerScrollbar:false
+});
+
+$('#datetimepicker10').datetimepicker({
+	step:5,
+	inline:true
+});
+$('#datetimepicker_mask').datetimepicker({
+	mask:'9999/19/39 29:59'
+});
+
+$('#datetimepicker1').datetimepicker({
+	datepicker:false,
+	format:'H:i',
+	step:5
+});
+$('#datetimepicker2').datetimepicker({
+	yearOffset:222,
+	lang:'ch',
+	timepicker:false,
+	format:'d/m/Y',
+	formatDate:'Y/m/d',
+	minDate:'-1970/01/02', // yesterday is minimum date
+	maxDate:'+1970/01/02' // and tommorow is maximum date calendar
+});
+$('#datetimepicker3').datetimepicker({
+	inline:true
+});
+$('#datetimepicker4').datetimepicker();
+$('#open').click(function(){
+	$('#datetimepicker4').datetimepicker('show');
+});
+$('#close').click(function(){
+	$('#datetimepicker4').datetimepicker('hide');
+});
+$('#reset').click(function(){
+	$('#datetimepicker4').datetimepicker('reset');
+});
+$('#datetimepicker5').datetimepicker({
+	datepicker:false,
+	allowTimes:['12:00','13:00','15:00','17:00','17:05','17:20','19:00','20:00'],
+	step:5
+});
+$('#datetimepicker6').datetimepicker();
+$('#destroy').click(function(){
+	if( $('#datetimepicker6').data('xdsoft_datetimepicker') ){
+		$('#datetimepicker6').datetimepicker('destroy');
+		this.value = 'create';
+	}else{
+		$('#datetimepicker6').datetimepicker();
+		this.value = 'destroy';
+	}
+});
+var logic = function( currentDateTime ){
+	if( currentDateTime.getDay()==6 ){
+		this.setOptions({
+			minTime:'11:00'
+		});
+	}else
+		this.setOptions({
+			minTime:'8:00'
+		});
+};
+$('#datetimepicker7').datetimepicker({
+	onChangeDateTime:logic,
+	onShow:logic
+});
+$('#datetimepicker8').datetimepicker({
+	onGenerate:function( ct ){
+		$(this).find('.xdsoft_date')
+			.toggleClass('xdsoft_disabled');
+	},
+	minDate:'-1970/01/2',
+	maxDate:'+1970/01/2',
+	timepicker:false
+});
+$('#datetimepicker9').datetimepicker({
+	onGenerate:function( ct ){
+		$(this).find('.xdsoft_date.xdsoft_weekend')
+			.addClass('xdsoft_disabled');
+	},
+	weekends:['01.01.2014','02.01.2014','03.01.2014','04.01.2014','05.01.2014','06.01.2014'],
+	timepicker:false
+});
+var dateToDisable = new Date();
+	dateToDisable.setDate(dateToDisable.getDate() + 2);
+$('#datetimepicker11').datetimepicker({
+	beforeShowDay: function(date) {
+		if (date.getMonth() == dateToDisable.getMonth() && date.getDate() == dateToDisable.getDate()) {
+			return [false, ""]
+		}
+
+		return [true, ""];
+	}
+});
+$('#datetimepicker12').datetimepicker({
+	beforeShowDay: function(date) {
+		if (date.getMonth() == dateToDisable.getMonth() && date.getDate() == dateToDisable.getDate()) {
+			return [true, "custom-date-style"];
+		}
+
+		return [true, ""];
+	}
+});
+$('#datetimepicker_dark').datetimepicker({theme:'dark'})
+
+
+</script>
+
+
+<script>
+$.getJSON( "/welldays/requests/pending", function( data ) {
+  //$( ".pending" ).html( data );
+
+  var html = "<ul>";
+	for(i = 0; i < data.response.length; i++) {
+	    
+	    html += "<li>" + data.response[i].user_email +" "+data.response[i].id +" "+data.response[i].cday_id + "<a href='/welldays/mydays/approve/"+data.response[i].id+"'>approve</a>  <a href='/welldays/mydays/reject/"+data.response[i].id+"'>reject</a>"+"</li>";
+	}
+	html += "</ul>";
+
+	$(".pending").append(html);
+
+});
+$.getJSON( "/welldays/requests/approved", function( data ) {
+    var html = "<ul>";
+	for(i = 0; i < data.response.length; i++) {
+	    
+	    html += "<li>" + data.response[i].user_email +" "+data.response[i].id +" "+data.response[i].cday_id + "<a href='/welldays/mydays/reject/"+data.response[i].id+"'>reject</a>"+"</li>";
+	}
+	html += "</ul>";
+
+	$(".approved").append(html);
+});
+
+$.getJSON( "/welldays/requests/rejected", function( data ) {
+    var html = "<ul>";
+	for(i = 0; i < data.response.length; i++) {
+	    
+	    html += "<li>" + data.response[i].user_email +" "+data.response[i].id +" "+data.response[i].cday_id + "<a href='/welldays/mydays/approve/"+data.response[i].id+"'>approve</a></li>";
+	}
+	html += "</ul>";
+
+	$(".rejected").append(html);
+});
+
+$.getJSON( "/welldays/users/", function( data ) {
+	console.log("data.response"+data.response);
+	console.dir(data.response);
+
+	var daysoptions="";
+	for (var i=0;i<data.response.users.length;i++) {
+		var selectedstr="";
+		daysoptions+="<option value = '"+data.response.users[i].id+"'>"+data.response.users[i].user_email+"</option>"
+	}
+	$('select[name=users]').html(daysoptions);
+
+
+});
+
+
+</script>
+
+<br/>APPROVED REQUESTS:<BR/>
+<div class="approved">
+
+</div>
+<BR/>
+PENDING REQUESTS:<BR/>
+<div class="pending">
+
+</div>
+<BR/>
+REJECTED REQUESTS:<BR/>
+<div class="rejected">
+
+</div>
+
+<BR/>
+EDIT A USER:<BR/>
+<form action="/welldays/adminuser/" method="post">
+	<select name="users"></select>
+	<input type="submit" value="Edit">
+</form>
+<div class="users">
+
+</div>
+

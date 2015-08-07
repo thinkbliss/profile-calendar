@@ -1,0 +1,80 @@
+
+
+<div id='adminnav'>
+<ul>
+<li><a href="/welldays/admin/employees">Employees</a></li>
+<li><a href="/welldays/admin/events">Events</a></li>
+<li><a href="/welldays/admin/organization">Organization</a></li>
+<li><a href="/welldays/admin/testimonials">Testimonials</a></li>
+</ul>
+</div>
+
+
+
+<br/><br/>PENDING TESTIMONIALS<br/>
+
+
+<div class="pending"></div>
+
+<br/><br/>approved TESTIMONIALS<br/>
+
+
+<div class="approved"></div>
+
+<br/><br/>rejected TESTIMONIALS<br/>
+
+
+<div class="rejected"></div>
+
+
+<script>
+
+function getPendingEvents(pagenum) {
+  console.log ("getPendingEvents"+pagenum);
+      $(".pending").html('');
+
+      $.getJSON( "/welldays/testimonials/get?status=pending&limit=20", function( data ) {
+        //$( ".pending" ).html( data );
+        var pagecount=Math.ceil(data.count/5);
+        var html = "<ul>";
+        for(i = 0; i < data.response.length; i++) {
+            
+            html += "<li>" + data.response[i].id+" "+data.response[i].testimonial +" "+data.response[i].user_email +" "+data.response[i].user_nick + "<a href='/welldays/testimonials/approve?id="+data.response[i].id+"'>approve</a>  <a href='/welldays/testimonials/reject?id="+data.response[i].id+"'>reject</a>"+"</li>";
+        }
+        html += "</ul>";
+
+        $(".pending").append(html);
+      });
+
+
+            $.getJSON( "/welldays/testimonials/get?status=approved&limit=20", function( data ) {
+        //$( ".pending" ).html( data );
+        var pagecount=Math.ceil(data.count/5);
+        var html = "<ul>";
+        for(i = 0; i < data.response.length; i++) {
+            
+            html += "<li>" + data.response[i].id+" "+data.response[i].testimonial +" "+data.response[i].user_email +" "+data.response[i].user_nick + "<a href='/welldays/testimonials/reject?id="+data.response[i].id+"'>reject</a>"+"</li>";
+        }
+        html += "</ul>";
+
+        $(".approved").append(html);
+      });
+            $.getJSON( "/welldays/testimonials/get?status=rejected&limit=20", function( data ) {
+        //$( ".pending" ).html( data );
+        var pagecount=Math.ceil(data.count/5);
+        var html = "<ul>";
+        for(i = 0; i < data.response.length; i++) {
+            
+            html += "<li>" + data.response[i].id+" "+data.response[i].testimonial +" "+data.response[i].user_email +" "+data.response[i].user_nick + "<a href='/welldays/testimonials/approve?id="+data.response[i].id+"'>approve</a>"+"</li>";
+        }
+        html += "</ul>";
+
+        $(".rejected").append(html);
+      });
+
+
+}
+
+
+getPendingEvents(0);
+</script>

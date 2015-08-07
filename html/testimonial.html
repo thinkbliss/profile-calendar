@@ -1,0 +1,50 @@
+<div class="heroContainer">
+	<div class="heroContent">
+		<h2>TESTIMONIAL</h2>
+		<p class="toHR">Still like WTF? <a href="javascript:void();">Email HR</a></p>
+	</div>
+</div>
+
+<div class="mainContentContainer">
+	<div id="testimonialContent">
+			NEED TESTIMONIAL
+
+			<form action="/welldays/testimonials/add" id="addcharity">
+				TESTIMONIAL<br/>
+			  <input type="text" name="testimonial" placeholder="blah...">
+			  	<br/>NICK NAME<br/>
+			  <input type="text" name="user_nick" placeholder="blah...">
+			
+			  <input type="submit" value="Do It">
+			</form>
+	</div>
+</div>
+
+
+<div id="result"></div>
+
+
+<script>
+// Attach a submit handler to the form
+$( "#addcharity" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    testimonial = $form.find( "input[name='testimonial']" ).val(),
+    user_nick = $form.find( "input[name='user_nick']" ).val(),
+    url = $form.attr( "action" );
+
+ 
+  // Send the data using post
+  var posting = $.post( url, { testimonial: testimonial,user_nick: user_nick } );
+ 
+  // Put the results in a div
+  posting.done(function( data ) {
+    //var content = $( data ).find( "#content" );
+    $( "#result" ).empty().append( data );
+  });
+});
+</script>

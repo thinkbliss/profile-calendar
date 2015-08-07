@@ -1,0 +1,8 @@
+{
+    "require": {
+        "google/apiclient": "1.0.*@beta",
+        "altorouter/altorouter": "1.1.0",
+        "phpmailer/phpmailer": "dev-master",
+        "willdurand/geocoder": "~3.0"
+    }
+}

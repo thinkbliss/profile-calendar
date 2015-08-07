@@ -1,0 +1,115 @@
+<div id="main"></div>
+<div class="myinfo">
+<div class="result">
+
+</div>
+
+	<div class="heroContainer">
+		<div class="heroContent">
+			<h2><span>PARTICIPATING</span>Charities</h2>
+		</div>
+	</div>
+
+	<div class="mainContentContainer">
+		<div class="charitiesContent"></div>
+		<div class="sectionContainer charityInfo">
+			<div class="sectionContent">
+				<h2>Do Something Already!</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras feugiat hendrerit risus, vehica porta odio. Praesent auctor diam, sit amet ornare tempor at. Cras pretium, nulla sagittis, nunc ligula pellentesque lectus, euismod sagittis elit elit sit amet magna.</p>
+				<div class="butn solid large">
+					<a href="/welldays/calendar/" class="largeArrowRight">BOOK NOW <span class="butnArrow rightSide"></span></a>
+				</div>				
+			</div>
+		</div>	
+
+	</div>
+
+
+<script>
+	console.log("get charities!");
+
+
+
+	// var $title = $('.title');
+
+	$.getJSON('/welldays/charities/get', function(data){
+		// $.each(data.response, function(key, val){
+		// 	$title.append('<span id="' +val.id + '">' +val.display_name +'</span');
+		// });
+		var charItem = $('.charitiesContent');
+
+		for (var i = 0; i < data.response.length; i++) {
+			//alert(data.response[i].display_name)
+
+			var prevevent=data.response[i].prevevent;
+			var nextevent=data.response[i].nextevent;
+			var preveventhtml="";
+			var nexteventhtml="";
+			if (prevevent) {
+				var prevEvDate = moment(data.response[i].prevevent.date).format('MMMM Do, YYYY');
+			
+				preveventhtml='<div class="columns six previousEvent">'+ '<p>'+'<span>Previous event:</span>' + '<br/>' + data.response[i].prevevent.title + '<br/>' + prevEvDate + '</p>'+ '</div>';
+			}
+			if (nextevent) {
+				var nextEvDate = moment(data.response[i].nextevent.date).format('MMMM Do, YYYY');			
+			
+				nexteventhtml='<div class="columns six nextEvent">' +
+							'<p>'+ 
+								'<span>Upcoming event:</span>' + '<br/>' + data.response[i].nextevent.title + '<br/>' + nextEvDate + '</p>'+
+						'</div>';
+			}
+			$(charItem).append(
+			'<div class="charityRow" id=charItem-' + data.response[i].id  + '>' + 
+				'<div class="calloutBox">' +
+					'<h3 class="title">'+ data.response[i].display_name +'</h3>'+
+					'<p>'+ data.response[i].description +'</p>'+
+					'<div class="schedule row">'+preveventhtml+nexteventhtml+		
+					'</div>' +
+					'<div class="butn outline medium">' +
+						'<a href='+ data.response[i].web_site + ' target="_blank">CHECK EM OUT</a>' +
+					'</div>' +
+				'</div>' +
+			'</div>');
+		}
+		$('.calloutBox').each(function (index){
+			$(this).addClass(index % 2 ? 'leftCalloutBox' : 'rightCalloutBox');
+		});
+	});
+
+
+	// $('.calloutBox').each(function(i, el) {
+	//    // As a side note, this === el.
+	//    if (i % 2 === 0) { 
+	//    		alert('you are even');
+	//    		$(el).addClass('rightCalloutBox');
+	//    }
+	//    else { 
+	//    	alert('you are odd') 
+	// 	$(el).addClass('leftCalloutBox');   }
+	// });
+
+
+
+
+		// var charityItem = {	
+		// 					'charityItemId': data.response[i].id,
+		// 					'charityItemName': data.response[i].display_name,
+		// 					'charityItemDesc': data.response[i].description
+		// 				};
+
+	// $.getJSON( "/welldays/charities/get", function( data ) {
+	//    var html = "<ul>";
+	// 	for(i = 0; i < data.response.length; i++) {
+	// 		 $('.title').append(data.response[i].display_name);
+
+	// 	    html += "<li><b>ID:" + data.response[i].id +"</b> NAME:"+data.response[i].display_name +" WEBSITE:"+data.response[i].web_site +" DESC:"+data.response[i].description + " CONTACT:"+data.response[i].contact_email+"</li>";
+	// 	}
+	// 	html += "</ul>";
+	// 	$(".result").append(html);
+	// });
+
+</script>
+
+						
+
+

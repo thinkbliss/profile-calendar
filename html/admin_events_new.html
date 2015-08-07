@@ -1,0 +1,561 @@
+
+
+<div id='adminnav'>
+<ul>
+<li><a href="/welldays/admin/employees">Employees</a></li>
+<li><a href="/welldays/admin/events">Events</a></li>
+<li><a href="/welldays/admin/organization">Organization</a></li>
+<li><a href="/welldays/admin/testimonials">Testimonials</a></li>
+</ul>
+</div>
+<br/><br/>
+<?php
+  if ($id=="new") {
+?>
+NEW EVENT
+<br/>
+<form action="/welldays/charitydays/add/" id="searchForm">
+<?php
+  } else {
+?>
+EDIT EVENT
+<br/>
+<form action="/welldays/charitydays/edit/" id="searchForm">
+<?php
+  }
+?>
+
+  TITLE:<br/>
+  <input type="text" name="title" placeholder="Enter Title"><br/>
+  DESCRIPTION:<br/>
+  <input type="text" name="description" placeholder="Enter Description"><br/>
+  EVENT START:<br/>
+  <input type="text" class="some_class" name="datetime" id="some_class_1"/><br/>
+  EVENT END:<br/>
+  <input type="text" class="some_class" name="datetimeend" id="some_class_1"/><br/>
+  <input class="pChk" type="checkbox" name="repeats" value="repeats">REPEATS<br>
+ 
+  <div  id="repeatbody" style="display:none;">
+
+   <select id="repeatoptions">
+  <option value="daily">DAILY</option>
+  <option value="weekly">WEEKLY</option>
+  <!--option value="monthly">MONTHLY</option-->
+  </select>
+
+  <div id="repeat_daily" style="display:block;">
+    ENDS:<BR/>
+    <input id="daily_never" type="radio" name="dailyval" class="dailyval" value="never" checked>NEVER
+    <br>
+    <input id="daily_after" type="radio" name="dailyval" class="dailyval" value="after">AFTER
+    <select id="dailyafter" style="display:none;"></select> 
+
+    <br>
+    <input id="daily_on" type="radio" name="dailyval" class="dailyval" value="on">ON
+    <input type="text" class="some_class" name="dailyondate" id="dailyon"  style="display:none;"/><br/>
+  </div>
+
+    <div id="repeat_weekly" style="display:none;">
+    <b>ENDS:</b><BR/>
+    <input id="weekly_never" type="radio" class="weeklyval" name="weeklyval" value="never" checked>NEVER
+    <br>
+    <input id="weekly_after" type="radio" class="weeklyval" name="weeklyval" value="after">AFTER
+        <select id="weeklyafter" style="display:none;"></select>
+    <br>
+    <input id="weekly_on" type="radio" class="weeklyval" name="weeklyval" value="on">ON
+    <input type="text" class="some_class" name="weeklyondate" id="weeklyon"  style="display:none;"/><br/>
+
+    <br/><b>DAYS:</b><BR/>
+    <input class="pChk" type="checkbox" name="day_of_week" value="0">SUN</input><br/>
+    <input class="pChk" type="checkbox" name="day_of_week" value="1">MON</input><br/>
+    <input class="pChk" type="checkbox" name="day_of_week" value="2">TUE</input><br/>
+    <input class="pChk" type="checkbox" name="day_of_week" value="3">WED</input><br/>
+    <input class="pChk" type="checkbox" name="day_of_week" value="4">THU</input><br/>
+    <input class="pChk" type="checkbox" name="day_of_week" value="5">FRI</input><br/>
+    <input class="pChk" type="checkbox" name="day_of_week" value="6">SAT</input><br/>
+  </div>
+
+    <div id="repeat_monthly" style="display:none;">
+    ENDS:<BR/>
+    <input type="radio" name="monthlyval" value="never" checked>NEVER3
+    <br>
+    <input type="radio" name="monthlyval" value="after">AFTER3
+    <br>
+    <input type="radio" name="monthlyval" value="on">ON3
+  </div>
+  </div>
+  <br/>
+
+  SUBMISSION DEADLINE:<br/>
+      <select name="submissiondeadline">
+        <option value="none">No Deadline</option>
+        <option value="2wk">2 Weeks Before</option>
+        <option value="1wk">1 Weeks Before</option>
+        <option value="3d">3 Days Before</option>
+
+      </select>
+  <br/>
+  
+  MAX CAPACITY:<br/>
+  <select id="capacity"></select><br/>
+  CHARITY:<br/>
+  <select name="charities"></select><br/>
+
+   <div class="form-horizontal" style="width: 550px">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Location:</label>
+
+        <div class="col-sm-10"><input type="text" class="form-control" id="us3-address"/></div>
+    </div>
+   
+    <div id="us3" style="width: 550px; height: 400px;"></div>
+    <div class="clearfix">&nbsp;</div>
+    <div class="m-t-small" style="display:none;">
+        <label class="p-r-small col-sm-1 control-label">Lat.:</label>
+
+        <div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="us3-lat"/></div>
+        <label class="p-r-small col-sm-2 control-label">Long.:</label>
+
+        <div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="us3-lon"/></div>
+    </div>
+    <div class="clearfix"></div>
+    <script>
+
+
+/*
+
+SUBMISSION START:<br/>
+  <input type="text" class="some_class" name="submissionstart" id="some_class_1"/><br/>
+  SUBMISSION START:<br/>
+  <input type="text" class="some_class" name="submissionend" id="some_class_1"/><br/>
+
+*/
+
+
+    $('.pChk').click(function() {
+    if( $(this).is(':checked')) {
+        $("#repeatbody").show();
+    } else {
+        $("#repeatbody").hide();
+    }
+
+    $('#repeatoptions').on('change', function() {
+      var value = $(this).val();
+      $("#repeat_daily").hide();
+      $("#repeat_weekly").hide();
+      $("#repeat_monthly").hide();
+      $("#repeat_"+value).show();
+    });
+
+$(".dailyval").change(function () {
+      if ($("#daily_after").is(':checked')) {
+            //$('#r1edit:input').removeAttr('disabled');
+                  $("#dailyafter").show();
+
+        }
+        else {
+            //$('#r1edit:input').attr('disabled', 'disabled');
+             $("#dailyafter").hide();
+        }
+
+
+        if ($("#daily_on").is(':checked')) {
+            //$('#r1edit:input').removeAttr('disabled');
+                  $("#dailyon").show();
+
+        }
+        else {
+            //$('#r1edit:input').attr('disabled', 'disabled');
+             $("#dailyon").hide();
+        }
+
+
+                    });
+
+$(".weeklyval").change(function () {
+      if ($("#weekly_after").is(':checked')) {
+            //$('#r1edit:input').removeAttr('disabled');
+                  $("#weeklyafter").show();
+
+        }
+        else {
+            //$('#r1edit:input').attr('disabled', 'disabled');
+             $("#weeklyafter").hide();
+        }
+
+
+        if ($("#weekly_on").is(':checked')) {
+            //$('#r1edit:input').removeAttr('disabled');
+                  $("#weeklyon").show();
+
+        }
+        else {
+            //$('#r1edit:input').attr('disabled', 'disabled');
+             $("#weeklyon").hide();
+        }
+
+
+                    });
+
+}); 
+
+
+    $('#us3').locationpicker({
+        location: {latitude: 40.7047178, longitude: -74.00598830000001},
+        radius: 50,
+        inputBinding: {
+            latitudeInput: $('#us3-lat'),
+            longitudeInput: $('#us3-lon'),
+            radiusInput: $('#us3-radius'),
+            locationNameInput: $('#us3-address')
+        },
+        enableAutocomplete: true,
+        onchanged: function (currentLocation, radius, isMarkerDropped) {
+            // Uncomment line below to show alert on each Location Changed event
+            //alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
+        }
+    });</script>
+</div>
+
+
+
+  <input type="submit" value="Do It">
+</form>
+<!-- the result of the search will be rendered inside this div -->
+
+
+
+
+
+
+
+
+<script>
+
+$(function(){
+    var $select = $("#capacity");
+    var $dailyafter = $("#dailyafter");
+    var $weeklyafter = $("#weeklyafter");
+   $select.append($('<option></option>').val("UNLIMITED").html("UNLIMITED"))
+    for (i=1;i<=100;i++){
+        $select.append($('<option></option>').val(i).html(i));
+        $dailyafter.append($('<option></option>').val(i).html(i+" OCCURENCES"));
+        $weeklyafter.append($('<option></option>').val(i).html(i+" OCCURENCES"));
+    }
+
+    
+});
+
+/*
+submissionstart = $form.find( "input[name='submissionstart']" ).val(),
+    submissionend = $form.find( "input[name='submissionend']" ).val(),
+*/
+
+// Attach a submit handler to the form
+$( "#searchForm" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    desc = $form.find( "input[name='description']" ).val(),
+    title = $form.find( "input[name='title']" ).val(),
+    datetime = $form.find( "input[name='datetime']" ).val(),
+    datetimeend = $form.find( "input[name='datetimeend']" ).val(),
+    submissiondeadline=$form.find( "select[name='submissiondeadline']").val(),
+    
+    capacity = $form.find( "select[id='capacity']" ).val(),
+    latitude=$form.find( "input[id='us3-lat']" ).val(),
+    longitude=$form.find( "input[id='us3-lon']" ).val(),
+    repeatoptions=$form.find( "select[id='repeatoptions']").val(),
+    repeats=$form.find( "input[name='repeats']" ).prop('checked'),
+    repeatsend="never",
+    <?php
+      if ($id=="new") {
+    ?>
+    url = $form.attr( "action" )+$form.find( "select[name='charities']" ).val();
+    <?php
+    } else {
+    ?>
+    url = $form.attr( "action" )+<?= $id ?>;
+    <?php
+    }
+    ?>
+
+
+
+    repeatsenddatetime=null;
+
+    if (repeatoptions=="daily") {
+      repeatcheck=$('input[name=dailyval]:checked')[0].value;
+      if (repeatcheck=="after") {
+          repeatsend = $form.find( "select[id='dailyafter']" ).val();
+      } else if (repeatcheck=="on") {
+          repeatsend = "date";
+          repeatsenddatetime = $form.find( "input[name='dailyondate']" ).val();
+      }
+      
+    } else if (repeatoptions=="weekly") {
+      repeatcheck=$('input[name=weeklyval]:checked')[0].value;
+      if (repeatcheck=="after") {
+          repeatsend = $form.find( "select[id='weeklyafter']" ).val();
+      } else if (repeatcheck=="on") {
+          repeatsend = "date";
+          repeatsenddatetime = $form.find( "input[name='weeklyondate']" ).val();
+      }
+    }
+
+
+
+    window.testthis=$form.find( "select[name='submissiondeadline']");
+var repeatdaysarray=[];
+if (repeatoptions=="weekly") {
+  
+  $('input[name="day_of_week"]:checked').each(function() {
+   repeatdaysarray.push(this.value);
+  });
+} else {
+  repeatdaysarray=null;
+}
+//var today=new Date();
+submissionstart = new Date().toISOString().slice(0, 16);
+//submissionstart=today.format("YYYY/MM/DD hH:mm");
+submissionend=new Date(datetime);
+
+if (submissiondeadline == "2wk") {
+    submissionend.setDate(submissionend.getDate() - 14);
+} else if (submissiondeadline == "1wk") {
+    submissionend.setDate(submissionend.getDate() - 7);
+} else if (submissiondeadline == "3d") {
+    submissionend.setDate(submissionend.getDate() - 3);
+}
+
+
+  // Send the data using post
+  var posting = $.post( url, { description: desc,title: title,datetime:datetime ,datetimeend:datetimeend,submissionstart:submissionstart,submissionend:submissionend.toISOString().slice(0, 16),capacity:capacity,latitude:latitude,longitude:longitude,repeats:repeats,repeattype:repeatoptions,repeatdaysarray:repeatdaysarray,repeatsend:repeatsend,repeatsenddatetime:repeatsenddatetime} );
+ 
+  // Put the results in a div
+  posting.done(function( data ) {
+    //var content = $( data ).find( "#content" );
+    $( "#result" ).empty().append( data );
+  });
+console.log("repeatsenddatetime "+repeatsenddatetime);
+});
+
+
+$.getJSON( "/welldays/charities/get", function( data ) {
+  console.log("data.response"+data.response);
+  console.dir(data.response);
+
+  var daysoptions="";
+  for (var i=0;i<data.response.length;i++) {
+    var selectedstr="";
+    daysoptions+="<option value = '"+data.response[i].id+"'>"+data.response[i].display_name+"</option>"
+  }
+  $('select[name=charities]').html(daysoptions);
+
+
+});
+</script>
+
+
+
+  
+
+
+  <script>/*
+window.onerror = function(errorMsg) {
+  $('#console').html($('#console').html()+'<br>'+errorMsg)
+}*/
+$('#datetimepicker').datetimepicker({
+dayOfWeekStart : 1,
+lang:'en',
+disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
+startDate:  '1986/01/05'
+});
+$('#datetimepicker').datetimepicker({value:'2015/04/15 05:03',step:10});
+
+$('.some_class').datetimepicker();
+
+$('#default_datetimepicker').datetimepicker({
+  formatTime:'H:i',
+  formatDate:'d.m.Y',
+  defaultDate:'8.12.1986', // it's my birthday
+  defaultTime:'10:00',
+  timepickerScrollbar:false
+});
+
+$('#datetimepicker10').datetimepicker({
+  step:5,
+  inline:true
+});
+$('#datetimepicker_mask').datetimepicker({
+  mask:'9999/19/39 29:59'
+});
+
+$('#datetimepicker1').datetimepicker({
+  datepicker:false,
+  format:'H:i',
+  step:5
+});
+$('#datetimepicker2').datetimepicker({
+  yearOffset:222,
+  lang:'ch',
+  timepicker:false,
+  format:'d/m/Y',
+  formatDate:'Y/m/d',
+  minDate:'-1970/01/02', // yesterday is minimum date
+  maxDate:'+1970/01/02' // and tommorow is maximum date calendar
+});
+$('#datetimepicker3').datetimepicker({
+  inline:true
+});
+$('#datetimepicker4').datetimepicker();
+$('#open').click(function(){
+  $('#datetimepicker4').datetimepicker('show');
+});
+$('#close').click(function(){
+  $('#datetimepicker4').datetimepicker('hide');
+});
+$('#reset').click(function(){
+  $('#datetimepicker4').datetimepicker('reset');
+});
+$('#datetimepicker5').datetimepicker({
+  datepicker:false,
+  allowTimes:['12:00','13:00','15:00','17:00','17:05','17:20','19:00','20:00'],
+  step:5
+});
+$('#datetimepicker6').datetimepicker();
+$('#destroy').click(function(){
+  if( $('#datetimepicker6').data('xdsoft_datetimepicker') ){
+    $('#datetimepicker6').datetimepicker('destroy');
+    this.value = 'create';
+  }else{
+    $('#datetimepicker6').datetimepicker();
+    this.value = 'destroy';
+  }
+});
+var logic = function( currentDateTime ){
+  if( currentDateTime.getDay()==6 ){
+    this.setOptions({
+      minTime:'11:00'
+    });
+  }else
+    this.setOptions({
+      minTime:'8:00'
+    });
+};
+$('#datetimepicker7').datetimepicker({
+  onChangeDateTime:logic,
+  onShow:logic
+});
+$('#datetimepicker8').datetimepicker({
+  onGenerate:function( ct ){
+    $(this).find('.xdsoft_date')
+      .toggleClass('xdsoft_disabled');
+  },
+  minDate:'-1970/01/2',
+  maxDate:'+1970/01/2',
+  timepicker:false
+});
+$('#datetimepicker9').datetimepicker({
+  onGenerate:function( ct ){
+    $(this).find('.xdsoft_date.xdsoft_weekend')
+      .addClass('xdsoft_disabled');
+  },
+  weekends:['01.01.2014','02.01.2014','03.01.2014','04.01.2014','05.01.2014','06.01.2014'],
+  timepicker:false
+});
+var dateToDisable = new Date();
+  dateToDisable.setDate(dateToDisable.getDate() + 2);
+$('#datetimepicker11').datetimepicker({
+  beforeShowDay: function(date) {
+    if (date.getMonth() == dateToDisable.getMonth() && date.getDate() == dateToDisable.getDate()) {
+      return [false, ""]
+    }
+
+    return [true, ""];
+  }
+});
+$('#datetimepicker12').datetimepicker({
+  beforeShowDay: function(date) {
+    if (date.getMonth() == dateToDisable.getMonth() && date.getDate() == dateToDisable.getDate()) {
+      return [true, "custom-date-style"];
+    }
+
+    return [true, ""];
+  }
+});
+$('#datetimepicker_dark').datetimepicker({theme:'dark'})
+
+
+</script>
+
+<?php
+  if ($id=="new") {
+?>
+NEW RESULT!.....
+
+<div id="result"></div>
+
+
+ <br/><br/><br/><br/>
+
+
+
+<?php
+  } else {
+?>
+EXIST RESULT!......
+<div id="test"></div>
+
+<script>
+
+
+$.getJSON( "/welldays/charitydays/get/<?php echo $id ?>", function( data ) {
+  var i =0;
+  console.log("current charityday loaded");
+console.dir(data.response[i]);
+
+   var html = "<b>ID:" + data.response[i].id +"</b> DATE:"+data.response[i].date +" TITLE:"+data.response[i].title +" DESC:"+data.response[i].description + " CHARITY ID:"+data.response[i]["charity id"];
+  $("#test").html(html);
+
+
+  $('input[name="title"]').val(data.response[i].title);
+  $('input[name="description"]').val(data.response[i].description);
+  $('input[name="datetime"]').val(data.response[i].date);
+  $('input[name="datetimeend"]').val(data.response[i].date_end);
+  $('input[name="submissionend"]').val(data.response[i].submit_date_end);
+  $('input[name="submissionstart"]').val(data.response[i].submit_date_start);
+  $("select[name='charities'] option[value='"+data.response[i]['charity id']+"']").attr('selected', 'selected');
+  $("select[id='capacity'] option[value='"+data.response[i]['capacity']+"']").attr('selected', 'selected');
+  //$("select[id='repeats'] option[value='"+data.response[i]['repeats']+"']").attr('selected', 'selected');
+  console.dir(data.response[i].meta);
+  var j=0;
+  var metaArray=data.response[i].meta;
+  while (metaArray[j]) {
+    console.dir(metaArray[j].meta_key);
+    console.dir(metaArray[j].meta_value);
+    if (metaArray[j].meta_key.indexOf("repeat")>=0) {
+      $( "input[name='repeats']" ).prop('checked',true);
+      $("#repeatbody").show();
+    }
+    j++;
+  }
+  
+  $('#us3-address').val(data.response[i]['locationname']);
+
+});
+
+
+
+</script>
+
+
+
+ <br/><br/><br/><br/>
+<?php
+  }
+?>
+

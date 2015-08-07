@@ -1,0 +1,120 @@
+
+<!-- <div class="myinfo">
+<div class="result">
+
+</div>
+ -->
+<div class="heroContainer">
+	<div class="heroContent">
+		<h2>My Days</h2>
+		<p class="toHR">Still like WTF? <a href="mailto:hr@droga5.com">Email HR</a></p>
+	</div>
+</div>
+<div class="mainContentContainer">
+	<div class="myDaysContent">
+		<div class="subHead">
+			<span class="myinfo"></span>
+		</div>
+		<div class="myDaysDetails"></div>
+	</div>
+</div>
+
+
+
+<script>
+
+		function deleteMyDay(mydayid) {
+            console.log("removecharityday " + mydayid);
+            var urlstr = "/welldays/mydays/delete/" + mydayid;
+            var self = this;
+            $.getJSON(urlstr, function(data) {
+                var response = data.response;
+                //NOW NEED TO UPDATE CALENDAR AND CLOSE THIS WINDOW
+                console.dir(response);
+                loadJSONforMyDays();
+                
+            });
+        }
+
+function loadJSONforMyDays() {
+	$.getJSON( "/welldays/mydays/get/all", function( data ) {
+		console.dir(data);
+	   var html = '<div class="myDaysDetials">';
+
+	   if(data.response.days) {
+
+		for(i = 0; i < data.response.days.length; i++) {
+			console.log("i "+i);
+			var myStartDate = moment(data.response.days[i].date).format('MMMM Do, YYYY (ddd)');
+			var myHourStart = moment(data.response.days[i].date).format('h:mm A');
+			var myHourEnd = moment(data.response.days[i].date_end).format('h:mm A');
+			var myDayLat = data.response.days[i].latitude;
+		    var myDayLong = data.response.days[i].longitude;
+		    var myDayLocation = [myDayLat, myDayLong];		
+			var myTimePlace = '<span class="displayBlock">' + myStartDate + '</span><span class="displayBlock">' + myHourStart + ' - ' + myHourEnd + '</span><p class="location"><a class="locationLink primaryColor" href="https://www.google.com/maps/place/' + myDayLocation + '"target="_blank">' + data.response.days[0].location_name + '</a></p>';
+			var myDaysInfo = '<span class="displayBlock">' + data.response.days[i].charityname + '</span><span class="displayblock boldWeight">' + data.response.days[i].title + '</span>'+ '<p>' + data.response.days[i].description + '</p>'		
+
+			var statushtml="";
+		    if (data.response.days[i].status == "pending") {
+		    		//show question mark
+		    			statushtml='<span class="pendingStatus"></span><a class="butnMyDays butnSpecial" href="javascript:deleteMyDay(' + data.response.days[i].id + ')">CANCEL REQUEST</a>';
+		  
+		    } else {
+		    		//show check
+		    			statushtml='<span class="approvedStatus"></span><a class="butnMyDays butnSpecial" href="javascript:deleteMyDay(' + data.response.days[i].id + ')">I CANT ATTEND ANYMORE</a>';
+		  
+		    }	
+		    
+		    if (data.response.days[i].special_instructions == null){
+		    		html += '<div class="myDaysList">' +
+		    			'<div class="row">' +
+		    				'<div class="columns three leftContent">' + 
+		    					'<div class="myDaysTimePlace">' + myTimePlace + '</div>' + 
+		    				'</div>' +
+		    				'<div class="columns six centerContent">' + myDaysInfo + '</div>' +
+		    				'<div class="columns three rightContent">' + data.response.days[i].status + statushtml + '</div>' +
+		    			'</div>' +
+		    		'</div>' +
+		    		'<div class="myDaysRequirement"></div>' 
+
+		    	}else {
+		    		html += '<div class="myDaysList">' +
+		    			'<div class="row">' +
+		    				'<div class="columns three leftContent">' + 
+		    					'<div class="myDaysTimePlace">' + myTimePlace + '</div>' + 
+		    				'</div>' +
+		    				'<div class="columns six centerContent">' + myDaysInfo + '</div>' +
+		    				'<div class="columns three rightContent">' + data.response.days[i].status + statushtml + '</div>' +
+		    			'</div>' +
+		    		'</div>' +
+		    		'<div class="myDaysRequirement"><div class="requirementContent"><span class="displayblock boldWeight">Requirements</span><p>' + data.response.days[i].special_instructions + '</p></div></div>' 
+		    		}
+		    		// " CHARITY DAY ID:"+data.response.days[i]["charityday_id"]+ " REPEAT ID:"+data.response.days[i]["repeat_id"]+ " CHARITY ID:"+data.response.days[i]["charity id"] + statushtml +"</div>";
+		}
+
+	} else {
+
+		html += "<div class='myDaysList'><div class='row'><p class='specialResponse'>You currently aren't signed up for any Well Days.<br/>Checkout the <a href='/welldays/calendar/'>calendar</a> to sign up for a Well Days</p></div></div>";
+	}
+		html += "</div>";
+		console.dir(html);
+		$(".myDaysDetails").html(html);
+
+		var infohtml = "YOU HAVE " + '<span class="primaryColor">' + data.response.days_available.days_available + '</span>  REMAINING WELL DAYS';
+
+		console.dir(infohtml);
+		$(".myinfo").html(infohtml);
+	});
+}
+
+
+
+loadJSONforMyDays();
+
+// $.getJSON( "/welldays/user/me", function( data ) {
+// 	console.dir(data);
+// 	$(".myinfo").append(data.response.days_available+" DAYS AVAILABLE");
+// });
+</script>
+
+

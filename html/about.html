@@ -1,0 +1,247 @@
+
+<!-- <div id="video" class="overlay">
+	<a href="javascript:void(0)" class="overlay-close"></a>
+  	<div class="overlay-inner">	
+  		<div class='embed-container'>					
+			<iframe src="https://player.vimeo.com/video/87180764?color=000000&title=0&byline=0&portrait=0" width="1024" height="576" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		</div>
+  	</div>
+</div> -->
+
+<div class="mainContentContainer">
+	<div class="sectionContainer" id="videoIntro">
+		<div class="sectionContent">
+			<h2>Don't waste a sick day.<br/>Make it a well day.</h2>
+			<div class="butn outline large">
+				<a href="javascript:void(0)" data-overlay="video" class="overlay-trigger">WATCH VIDEO</a>
+			</div>
+			<div class="imgCentered">
+				<img src="/welldays/assets/images/icon-scroll.png" >
+			</div>
+		</div>
+	</div>
+	<div class="sectionContainer" id="whyContent">		
+		<div class="sectionContent">
+			<h2>Why we have Well Days</h2>
+			<p>Thanks to things like Droga Yoga and Fresh Cut Fruit in the Kitchen (*powered by Toma), it turns out we're a pretty healthy agency. So even though Droga budgets for sick days, we actually aren't using that many of them. Which means, a ton of them end up going to waste. Until now. If each of us uses just one sick day to volunteer in the community, we can make a huuuuuuge difference. (This is a fact - if you haven't noticed, we're a giant ass agency now.)</p>
+			<div class="butn solid large">
+				<a href="/welldays/calendar/" class="largeArrowRight">BOOK NOW <span class="butnArrow rightSide"></span></a>
+			</div>
+		</div>		
+	</div>
+	<div class="sectionContainer" id="charitiesContent">
+		<div class="sectionContent">
+			<h2><span>PARTICIPATING</span>Charities</h2>
+			<p>Do you like dogs? Food? Kids? Blood? We’ve got a good mix of five charities here – so you can use your Well Day doing something that interests you.</p>
+		</div>
+	</div>	
+	<div class="sectionContainer" id="charitiesMosaicContent">
+		<div class="column-01 mosaicColumn">
+			<h4><span>826</span><span>Valencia</span></h4>
+			<a href="/welldays/charities/#charItem-2">ghia</a>
+		</div>
+		<div class="column-02 mosaicColumn">
+			<h4><span>Red</span><span>Cross</span></h4>
+		</div>
+		<div class="column-03 mosaicColumn">
+			<h4><span>Habitat for</span><span>Humanity</span></h4>
+		</div>
+		<div class="column-04 mosaicColumn">
+			<div class="row-01">
+				<h4><span>Best Friends</span><span>Animal Society</span></h4>
+			</div>
+			<div class="row-02">
+				<h4><span>City Harvest</span></h4>				
+			</div>
+		</div>				
+
+	</div>	
+	<div class="sectionContainer" id="testimonialsContent">		
+		<h2>TESTIMONIALS</h2>
+		<div class="testimonialsCarousel">
+<!-- 			<ul>
+				<li class="slides">
+					<p>"I wanted to play hooky but also wanted a clear conscience. Well Days let me have both. Thanks Well Days!"</p>
+					<div class="userInfo">
+						<div class="userImage">
+							<img src="/welldays/assets/images/fpo-user.jpg" alt="">
+						</div>
+						<p>
+							<span class="realName">Dude</span>
+							<span class="nickName">Diddly Dood</span>
+						</p>
+					</div>
+				</li>
+				<a href="javascript:void(0)">prev</a>
+				<a href="javascript:void(0)">next</a>				
+			</ul> -->
+
+            <div class="jcarousel-wrapper">
+                <div class="jcarousel">
+                    <div class="loading">Loading carousel items...</div>
+                </div>
+
+                <a href="#" class="jcarousel-control-prev"><span></span></a>
+                <a href="#" class="jcarousel-control-next"><span></span></a>
+            </div>	
+  		</div>	
+
+
+
+	</div>	
+
+
+</div>
+
+<script type="text/javascript">
+
+
+    // $('.overlay-trigger').on( 'click', function( event ) {
+    //     event.preventDefault();
+    //     var overlay = $( this ).data( 'overlay' );
+    //     if (! overlay) {
+    //         console.log( 'You must provide the overlay id in the trigger. (data-overlay="overlay-id").' );
+    //         return;
+    //     }
+
+    //     var id = '#' + overlay;
+
+    //     $(id).addClass('overlay-open');
+    //     $('body').addClass('overlay-view');
+
+    //     $(id).on('click', function(event) {
+    //         // Verify that only the outer wrapper was clicked.
+    //         if (event.target.id == overlay) {
+    //             $(id).removeClass('overlay-open');
+    //             $('body').removeClass('overlay-view');
+    //         }
+    //     });
+
+    //     $('.overlay-close').on('click', function(event) {
+    //         // Verify that only the outer wrapper was clicked.
+    //             $(id).removeClass('overlay-open');
+    //             $('body').removeClass('overlay-view');
+    //     });
+
+    //     $(document).keyup( function(event) {
+    //         // Verify that the esc key was pressed.
+    //         if (event.keyCode == 27) {
+    //             $(id).removeClass('overlay-open');
+    //             $('body').removeClass('overlay-view');
+    //         }
+    //     });
+    // });
+
+
+	// console.log('get testimonials');
+	// $.getJSON('/welldays/testimonials/get', function(data){
+	// 	// $.each(data.response, function(key, val){
+	// 	// 	$title.append('<span id="' +val.id + '">' +val.display_name +'</span');
+	// 	// });
+	// 	var testimonialItem = $('.testimonialsCarousel');
+	// 		$('.carousel li').each(function (i) {
+ //                $(this).addClass("item-" + i);
+ //            });
+
+	// 	for (var i = 0; i < data.response.length; i++) {
+	// 		//alert(data.response[i].display_name)
+
+	// 		$('ul.testimonialCarousel').append(
+	// 		// '<li class="slides" id=charItem-' + data.response[i].id  + '>' + 
+	// 		// 	'<p>this is a testionmoinl</p>' +
+	// 		// 	'<div class="userInfo">' + 
+	// 		// 		'<div class="userImage">' +
+	// 		// 			'<img src="/welldays/assets/images/fpo-user.jpg" alt="" />'+
+	// 		// 		'</div>' +
+	// 		// 		'<p>'+
+	// 		// 			'<span class="realName">' + data.response[i].user_nick  +' </span>' + 
+	// 		// 			'<span class="nickName">Diddly Dood	</span>' + 
+	// 		// 		'</p>' +
+	// 		// 	'</div>'+
+	// 		// 	'</p>' +
+	// 		// '</li>'
+	// 		'<li class="slides">' +
+	// 			'<p>' + data.response[i].testimonial + '</p>' +
+	// 			'<div class="userInfo">' +
+	// 				'<div class="userImage">' +
+	// 					'<img src="/welldays/assets/images/fpo-user.jpg" alt="">' +
+	// 				'</div>' +
+	// 				'<p>' +
+	// 					'<span class="realName">' + data.response[i].name + '</span>' +
+	// 					'<span class="nickName">' + data.response[i].user_nick + '</span>' +
+	// 				'</p>' +
+	// 			'</div>' +
+	// 		'</li>'
+	// 		);
+	// 	}
+	// });
+    $(function() {
+        var jcarousel = $('.jcarousel').jcarousel();
+
+        $('.jcarousel-control-prev')
+            .on('jcarouselcontrol:active', function() {
+                $(this).removeClass('inactive');
+            })
+            .on('jcarouselcontrol:inactive', function() {
+                $(this).addClass('inactive');
+            })
+            .jcarouselControl({
+                target: '-=1',
+                autostart: false
+            });
+
+        $('.jcarousel-control-next')
+            .on('jcarouselcontrol:active', function() {
+                $(this).removeClass('inactive');
+            })
+            .on('jcarouselcontrol:inactive', function() {
+                $(this).addClass('inactive');
+            })
+            .jcarouselControl({
+                target: '+=1',
+                autostart: false
+            });
+
+
+      
+
+        $.getJSON('/welldays/testimonials/get', function(data){
+		// $.each(data.response, function(key, val){
+		// 	$title.append('<span id="' +val.id + '">' +val.display_name +'</span');
+		// });
+		var html = '<ul>';
+
+		for (var i = 0; i < data.response.length; i++) {
+			//alert(data.response[i].testimonial);
+			
+			html += '<li>' +
+						'<div class="sectionContent">' +
+							'<p>' + data.response[i].testimonial + '</p>' +
+							'<div class="userInfo">' +
+								'<div class="userImage">' +
+									'<img src="'+data.response[i].image+'" alt="">' +
+								'</div>' +
+								'<p>' +
+									'<span class="realName">' + data.response[i].name + '</span>' +
+									'<span class="nickName">' + data.response[i].user_nick + '</span>' +
+								'</p>' +
+							'</div>' +
+						'</div>' +
+					'</li>'
+		}
+			 html += '</ul>';
+		           
+            jcarousel
+                .html(html);
+
+            jcarousel.jcarousel('reload', ({wrap: 'circular'})).jcarouselAutoscroll({
+	            interval: 6000,
+	            target: '+=1',
+	            autostart: true,
+	        });
+		});
+    });
+
+
+
+</script>

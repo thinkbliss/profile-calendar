@@ -1,0 +1,37 @@
+
+<script>
+$.getJSON( "/welldays/user/get/<?php echo $id ?>", function( data ) {
+	console.dir(data.response);
+
+	var response=data.response;
+	console.log(response.user_email);
+	$('input[name=user_email]').val(response.user_email);
+	$('input[name=supervisor]').val(response.supervisor);
+	var daysoptions="";
+	for (var i=0;i<=5;i++) {
+		var selectedstr="";
+		if (response.days_available==i) {
+			selectedstr=" selected";
+		}
+		daysoptions+="<option value = '"+i+"'"+selectedstr+">"+i+"</option>"
+	}
+	$('select[name=days_available]').html(daysoptions);
+	if (response.ADMIN==1) {
+		$('input[name=ADMIN]').prop('checked', "checked");
+	}
+	
+});
+
+</script>
+
+<div class="adminTitle">EDIT EMPLOYEE DETAILS</div>
+<div class="adminContainer">
+<form action="/welldays/user/update/<?php echo $id ?>" method="post" id="addcharity">
+  EMAIL: <input type="text" name="user_email">
+  SUPERVISOR:<input type="text" name="supervisor" >
+  DAYS AVAILABLE: <select name="days_available">
+	</select>
+	ADMIN: <input type="checkbox" name="ADMIN" value="1">
+  <input type="submit" value="Update">
+</form>
+</div>

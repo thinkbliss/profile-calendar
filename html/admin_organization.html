@@ -1,0 +1,207 @@
+<div id='adminnav'>
+<ul>
+<li><a href="/welldays/admin/employees">Employees</a></li>
+<li><a href="/welldays/admin/events">Events</a></li>
+<li><a href="/welldays/admin/organization">Organization</a></li>
+<li><a href="/welldays/admin/testimonials">Testimonials</a></li>
+</ul>
+</div>
+<br/>
+
+
+<div id="charities"></div>
+ 
+<div id="result"></div>
+
+<br/>ADD a charity: (must be admin)<br/>
+<form action="/welldays/charity/add" id="addcharity">
+	DESCRIPTION<br/>
+  <input type="text" name="description" placeholder="blah...">
+  	<br/>CHARITY NAME<br/>
+  <input type="text" name="name" placeholder="blah...">
+    	<br/>CHARITY SHORTNAME<br/>
+  <input type="text" name="shortname" placeholder="blah...">
+  <br/>CONTACT<br/>
+  <input type="text" name="contact"/>
+  <br/>URL<br/>
+  <input type="text" name="url"/><br/>
+  <input type="submit" value="Do It">
+</form>
+<!-- the result of the search will be rendered inside this div -->
+
+ 
+<script>
+
+$.getJSON( "/welldays/charities/get", function( data ) {
+   var html = "<ul>";
+  for(i = 0; i < data.response.length; i++) {
+    var actionhtml="";
+      actionhtml=" <a href='/welldays/adminevent/"+data.response[i].id+"'>EDIT</a> <a href='/welldays/charitydays/delete/"+data.response[i].id+"'>DELETE</a>";
+
+      html += "<li><b>ID:" + data.response[i].id +"</b> NAME:"+data.response[i].display_name +"</b> SHORTNAME:"+data.response[i].display_shortname +" CONTACT:"+data.response[i].contact_email +" DESC:"+data.response[i].description + " WEBSITE:"+data.response[i].web_site+ actionhtml+"</li>";
+  }
+  html += "</ul>";
+  $("#charities").append(html);
+
+});
+
+
+// Attach a submit handler to the form
+$( "#addcharity" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    desc = $form.find( "input[name='description']" ).val(),
+    name = $form.find( "input[name='name']" ).val(),
+    shortname = $form.find( "input[name='shortname']" ).val(),
+    contact = $form.find( "input[name='contact']" ).val(),
+    myurl = $form.find( "input[name='url']" ).val(),
+    url = $form.attr( "action" );
+ 
+  // Send the data using post
+  var posting = $.post( url, { description: desc,name: name,shortname: shortname,contact:contact,url:myurl } );
+ 
+  // Put the results in a div
+  posting.done(function( data ) {
+    //var content = $( data ).find( "#content" );
+    $( "#result" ).empty().append( data );
+  });
+});
+</script>
+
+
+
+
+	
+
+
+	<script>/*
+window.onerror = function(errorMsg) {
+	$('#console').html($('#console').html()+'<br>'+errorMsg)
+}*/
+$('#datetimepicker').datetimepicker({
+dayOfWeekStart : 1,
+lang:'en',
+disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
+startDate:	'1986/01/05'
+});
+$('#datetimepicker').datetimepicker({value:'2015/04/15 05:03',step:10});
+
+$('.some_class').datetimepicker();
+
+$('#default_datetimepicker').datetimepicker({
+	formatTime:'H:i',
+	formatDate:'d.m.Y',
+	defaultDate:'8.12.1986', // it's my birthday
+	defaultTime:'10:00',
+	timepickerScrollbar:false
+});
+
+$('#datetimepicker10').datetimepicker({
+	step:5,
+	inline:true
+});
+$('#datetimepicker_mask').datetimepicker({
+	mask:'9999/19/39 29:59'
+});
+
+$('#datetimepicker1').datetimepicker({
+	datepicker:false,
+	format:'H:i',
+	step:5
+});
+$('#datetimepicker2').datetimepicker({
+	yearOffset:222,
+	lang:'ch',
+	timepicker:false,
+	format:'d/m/Y',
+	formatDate:'Y/m/d',
+	minDate:'-1970/01/02', // yesterday is minimum date
+	maxDate:'+1970/01/02' // and tommorow is maximum date calendar
+});
+$('#datetimepicker3').datetimepicker({
+	inline:true
+});
+$('#datetimepicker4').datetimepicker();
+$('#open').click(function(){
+	$('#datetimepicker4').datetimepicker('show');
+});
+$('#close').click(function(){
+	$('#datetimepicker4').datetimepicker('hide');
+});
+$('#reset').click(function(){
+	$('#datetimepicker4').datetimepicker('reset');
+});
+$('#datetimepicker5').datetimepicker({
+	datepicker:false,
+	allowTimes:['12:00','13:00','15:00','17:00','17:05','17:20','19:00','20:00'],
+	step:5
+});
+$('#datetimepicker6').datetimepicker();
+$('#destroy').click(function(){
+	if( $('#datetimepicker6').data('xdsoft_datetimepicker') ){
+		$('#datetimepicker6').datetimepicker('destroy');
+		this.value = 'create';
+	}else{
+		$('#datetimepicker6').datetimepicker();
+		this.value = 'destroy';
+	}
+});
+var logic = function( currentDateTime ){
+	if( currentDateTime.getDay()==6 ){
+		this.setOptions({
+			minTime:'11:00'
+		});
+	}else
+		this.setOptions({
+			minTime:'8:00'
+		});
+};
+$('#datetimepicker7').datetimepicker({
+	onChangeDateTime:logic,
+	onShow:logic
+});
+$('#datetimepicker8').datetimepicker({
+	onGenerate:function( ct ){
+		$(this).find('.xdsoft_date')
+			.toggleClass('xdsoft_disabled');
+	},
+	minDate:'-1970/01/2',
+	maxDate:'+1970/01/2',
+	timepicker:false
+});
+$('#datetimepicker9').datetimepicker({
+	onGenerate:function( ct ){
+		$(this).find('.xdsoft_date.xdsoft_weekend')
+			.addClass('xdsoft_disabled');
+	},
+	weekends:['01.01.2014','02.01.2014','03.01.2014','04.01.2014','05.01.2014','06.01.2014'],
+	timepicker:false
+});
+var dateToDisable = new Date();
+	dateToDisable.setDate(dateToDisable.getDate() + 2);
+$('#datetimepicker11').datetimepicker({
+	beforeShowDay: function(date) {
+		if (date.getMonth() == dateToDisable.getMonth() && date.getDate() == dateToDisable.getDate()) {
+			return [false, ""]
+		}
+
+		return [true, ""];
+	}
+});
+$('#datetimepicker12').datetimepicker({
+	beforeShowDay: function(date) {
+		if (date.getMonth() == dateToDisable.getMonth() && date.getDate() == dateToDisable.getDate()) {
+			return [true, "custom-date-style"];
+		}
+
+		return [true, ""];
+	}
+});
+$('#datetimepicker_dark').datetimepicker({theme:'dark'})
+
+
+</script>
